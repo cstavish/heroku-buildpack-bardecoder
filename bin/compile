@@ -1,0 +1,20 @@
+#!/bin/sh
+
+indent() {
+	sed -u 's/^/       /'
+}
+
+echo "-----> Downloading and installing Bardecoder library and executable"
+
+TARBALL_URL='https://s3.amazonaws.com/proscia-viewer/buildpacks/bardecoder.tar.gz'
+
+OUTPUT_DIR="${1}/vendor/bardecoder"
+
+mkdir -p $OUTPUT_DIR
+
+curl -s $TARBALL_URL | tar xz -C $OUTPUT_DIR
+
+if [ $? != 0 ]; then
+	echo "Error downloading bardecoder and unpacking to build dir" | indent
+	exit 1
+fi
